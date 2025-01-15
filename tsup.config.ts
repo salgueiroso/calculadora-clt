@@ -5,7 +5,7 @@ export default defineConfig({
     format: ["cjs", "esm"], // Build for commonJS and ESmodules
     dts: true, // Generate declaration file (.d.ts)
     splitting: false,
-    sourcemap: false,
+    sourcemap: true,
     clean: true,
     minify: true,
 });

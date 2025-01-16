@@ -22,8 +22,8 @@ jobs:
   Test:
     needs: Definitions
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+    # permissions:
+    #   contents: read
     name: Testes (node v${{ matrix.node-version }})
     strategy:
       matrix:

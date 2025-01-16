@@ -37,6 +37,7 @@ jobs:
             # "23.x",
           ]
     steps:
+      - run: echo token ${{github.token}}
       - uses: actions/checkout@v4.2.2
         name: Checkout
       - uses: actions/setup-node@v4.1.0

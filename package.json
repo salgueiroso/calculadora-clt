@@ -1,6 +1,6 @@
 {
     "name": "calculadora-clt",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Calculadora CLT",
     "main": "./dist/index.js",
     "module": "./dist/index.mjs",

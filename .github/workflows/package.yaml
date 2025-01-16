@@ -56,7 +56,15 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/lcov.info
           flags: unittests
+          fail_ci_if_error: true
           name: code-coverage-report-node-${{matrix.node-version}}
+      - name: Upload test results to Codecov
+        if: success() || failure()
+        uses: codecov/test-results-action@v1.0.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          files: reports/junit.xml
 
   Build:
     needs: [Test, Definitions]

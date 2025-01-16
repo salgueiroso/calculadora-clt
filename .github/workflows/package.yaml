@@ -1,0 +1,106 @@
+name: "Package"
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+env:
+  DEFAULT_NODE_VERSION: 22.x
+jobs:
+  Definitions:
+    runs-on: ubuntu-latest
+    outputs:
+      DEFAULT_NODE_VERSION: ${{ env.DEFAULT_NODE_VERSION }}
+    steps:
+      - run: echo "Preparing definitions..."
+  Test:
+    needs: Definitions
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version:
+          [
+            "20.x",
+            "21.x",
+            "${{ needs.Definitions.outputs.DEFAULT_NODE_VERSION }}",
+            "23.x",
+          ]
+    steps:
+      - uses: actions/checkout@v4.2.2
+        name: Checkout
+      - uses: actions/setup-node@v4.1.0
+        name: Setup Node.js ${{ matrix.node-version }}
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: Run npm ci
+        run: npm ci
+      - name: Run tests
+        run: npm test
+      - name: Test Report
+        uses: dorny/test-reporter@v1.9.1
+        if: success() || failure()
+        with:
+          name: JEST Tests
+          path: reports/junit.xml
+          reporter: jest-junit
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5.1.2
+        with:
+          token: ${{ secrets.NODE_AUTH_TOKEN }}
+          files: ./coverage/lcov.info
+          flags: unittests
+          name: code-coverage-report
+
+  Build:
+    needs: [Test, Definitions]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.2.2
+        name: Checkout
+      - uses: actions/setup-node@v4.1.0
+        name: Setup Node.js
+        with:
+          node-version: ${{ needs.Definitions.outputs.DEFAULT_NODE_VERSION }}
+          cache: "npm"
+      - name: Run npm ci
+        run: npm ci
+      - name: Run build
+        run: npm run build
+      - name: Run npm pack
+        run: npm pack
+      - name: Extract package
+        run: tar -xvf *.tgz
+      - name: Archive build
+        uses: actions/upload-artifact@v4.5.0
+        with:
+          name: package
+          path: "./package"
+
+  Deploy:
+    needs: [Build, Definitions]
+    runs-on: ubuntu-latest
+    environment: prd
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4.1.8
+        with:
+          name: package
+      - uses: actions/setup-node@v4.1.0
+        name: Setup Node.js
+        with:
+          node-version: ${{ needs.Definitions.outputs.DEFAULT_NODE_VERSION }}
+          registry-url: "https://registry.npmjs.org"
+      - run: find .
+        name: List package files
+      - name: Run npm publish
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}

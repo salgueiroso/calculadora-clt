@@ -8,9 +8,9 @@ const config: Config = {
         ["jest-junit", { outputDirectory: "./reports", outputName: "junit.xml" }]
     ],
     collectCoverage: true,
-    coverageDirectory: "./node_modules/coverage",
+    coverageDirectory: "./coverage",
 
-    // coverageReporters: ["json", "lcov", "text", "clover"],
+    coverageReporters: ["lcov"],
     maxConcurrency: 1
 
 }

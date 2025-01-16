@@ -5,7 +5,7 @@ export class Faixa {
     impostoFaixa: number | null = null;
 
     constructor(aliquota: number, valorMaximo: number) {
-        this.aliquota = aliquota;
+        this.aliquota = aliquota > 1 ? aliquota / 100 : aliquota;
         this.valorMaximo = valorMaximo;
     }
 }

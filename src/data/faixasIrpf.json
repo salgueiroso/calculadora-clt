@@ -1,0 +1,22 @@
+[
+    {
+        "aliquota": 0,
+        "valorMaximo": 2259.20
+    },
+    {
+        "aliquota": 7.5,
+        "valorMaximo": 2826.65
+    },
+    {
+        "aliquota": 15,
+        "valorMaximo": 3751.05
+    },
+    {
+        "aliquota": 22.5,
+        "valorMaximo": 4664.68
+    },
+    {
+        "aliquota": 27.5,
+        "valorMaximo": "Infinity"
+    }
+]

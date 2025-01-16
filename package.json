@@ -24,9 +24,8 @@
         "url": "git+https://github.com/salgueiroso/calculadora-clt.git"
     },
     "keywords": [
-        "minesweeper",
-        "typescript",
-        "engine"
+        "clt",
+        "typescript"
     ],
     "author": "Acacio Salgueiro",
     "license": "MIT",

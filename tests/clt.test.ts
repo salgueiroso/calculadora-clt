@@ -58,6 +58,4 @@ describe('CLT', () => {
         expect(imposto2).toEqual(2143.061505);
     });
 
-
-
 });

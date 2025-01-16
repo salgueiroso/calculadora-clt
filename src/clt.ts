@@ -1,24 +1,17 @@
 import { LinkedList } from "./linkedlist";
 import { Faixa } from "./modelos";
 
+import faixasInss from './data/faixasInss.json';
+import faixasIrpf from './data/faixasIrpf.json';
+
+
+
 export class Faixas extends LinkedList<Faixa> { }
 
 export class Clt {
 
-    private _faixasInss = new Faixas([
-        new Faixa(7.5, 1412),
-        new Faixa(9, 2666.68),
-        new Faixa(12, 4000.03),
-        new Faixa(14, 7786.02)
-    ]);
-
-    private _faixasIrpf = new Faixas([
-        new Faixa(0, 2259.20),
-        new Faixa(7.5, 2826.65),
-        new Faixa(15, 3751.05),
-        new Faixa(22.5, 4664.68),
-        new Faixa(27.5, Infinity)
-    ]);
+    private _faixasInss: Faixas;
+    private _faixasIrpf: Faixas;
 
     public readonly salarioBruto: number;
 
@@ -27,6 +20,8 @@ export class Clt {
 
     constructor(salarioBruto: number) {
         this.salarioBruto = salarioBruto;
+        this._faixasInss = new Faixas(faixasInss.map(f => new Faixa(f.aliquota, +f.valorMaximo)));
+        this._faixasIrpf = new Faixas(faixasIrpf.map(f => new Faixa(f.aliquota, +f.valorMaximo)));
     }
 
     public get vlImpostoInss(): number { return this.calcularInss(); }
@@ -53,7 +48,7 @@ export class Clt {
         for (let no of faixas) {
             const vlInicioFaixa = this.normalizarVlMaxFaixa(vlBase, no.prev?.data.valorMaximo);
             no.data.valorBaseFaixa = this.normalizarVlMaxFaixa(vlBase, no.data.valorMaximo) - vlInicioFaixa;
-            no.data.impostoFaixa = no.data.valorBaseFaixa * (no.data.aliquota / 100);
+            no.data.impostoFaixa = no.data.valorBaseFaixa * no.data.aliquota;
         }
 
         const vlImposto = faixas

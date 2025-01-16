@@ -1,0 +1,18 @@
+[
+    {
+        "aliquota": 7.5,
+        "valorMaximo": 1412
+    },
+    {
+        "aliquota": 9,
+        "valorMaximo": 2666.68
+    },
+    {
+        "aliquota": 12,
+        "valorMaximo": 4000.03
+    },
+    {
+        "aliquota": 14,
+        "valorMaximo": 7786.02
+    }
+]

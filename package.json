@@ -9,8 +9,8 @@
         "dist"
     ],
     "engines": {
-        "node": ">=20",
-        "npm": ">=9"
+        "node": ">=22",
+        "npm": ">=10"
     },
     "scripts": {
         "test": "jest --coverage",

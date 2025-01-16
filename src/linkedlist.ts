@@ -1,4 +1,3 @@
-import { Faixa } from "./modelos";
 
 export class Node<T> {
     public next: Node<T> | null = null;

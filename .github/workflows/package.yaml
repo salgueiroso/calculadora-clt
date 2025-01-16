@@ -59,6 +59,10 @@ jobs:
   Build:
     needs: [Test, Definitions]
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      checks: write
     steps:
       - uses: actions/checkout@v4.2.2
         name: Checkout

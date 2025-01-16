@@ -11,7 +11,7 @@ const config: Config = {
     coverageDirectory: "./coverage",
 
     coverageReporters: ["lcov"],
-    maxConcurrency: 1
+    maxConcurrency: 5
 
 }
 

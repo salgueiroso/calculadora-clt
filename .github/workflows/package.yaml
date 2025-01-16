@@ -20,6 +20,7 @@ jobs:
   Test:
     needs: Definitions
     runs-on: ubuntu-latest
+    name: Testes (node v${{ matrix.node-version }})
     strategy:
       matrix:
         node-version:
@@ -45,16 +46,17 @@ jobs:
         uses: dorny/test-reporter@v1.9.1
         if: success() || failure()
         with:
-          name: JEST Tests
+          name: Testes (node v${{ matrix.node-version }}) - Resultados
           path: reports/junit.xml
           reporter: jest-junit
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.1.2
+        if: success() || failure()
         with:
-          token: ${{ secrets.NODE_AUTH_TOKEN }}
+          token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/lcov.info
           flags: unittests
-          name: code-coverage-report
+          name: code-coverage-report-node-${{matrix.node-version}}
 
   Build:
     needs: [Test, Definitions]

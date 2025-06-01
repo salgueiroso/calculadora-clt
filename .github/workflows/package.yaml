@@ -51,13 +51,18 @@ jobs:
           fi
   Test:
     needs:  [Definitions, check-npm-version]
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     permissions:
       contents: read
       checks: write
     name: Testes (node v${{ matrix.node-version }})
     strategy:
       matrix:
+        os: [
+            "ubuntu-latest",
+            "macos-latest",
+            "windows-latest"
+        ]
         node-version: [
             "16.x",
             # "20.x",

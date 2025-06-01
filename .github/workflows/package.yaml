@@ -87,7 +87,7 @@ jobs:
         uses: dorny/test-reporter@31a54ee7ebcacc03a09ea97a7e5465a47b84aea5
         if: success() || failure()
         with:
-          name: Testes (node v${{ matrix.node-version }}) - Resultados
+          name: Testes (os ${{matrix.os}})(node v${{ matrix.node-version }}) - Resultados
           path: reports/junit.xml
           reporter: jest-junit
       - name: Upload coverage to Codecov

@@ -1,3 +1,2 @@
-export * from './linkedlist';
-export * from './modelos';
-export * from './clt';
+export { Faixa } from './modelos';
+export { Clt, Faixas } from './clt';

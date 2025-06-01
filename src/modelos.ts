@@ -1,3 +1,5 @@
+import { Faixas } from ".";
+
 export class Faixa {
     aliquota: number;
     valorMaximo: number;
@@ -8,4 +10,11 @@ export class Faixa {
         this.aliquota = aliquota > 1 ? aliquota / 100 : aliquota;
         this.valorMaximo = valorMaximo;
     }
+}
+
+export interface IOptions {
+    incluir13Salario: boolean;
+    incluirFerias: boolean;
+    faixasInss: Faixas | null;
+    faixasIrpf: Faixas | null;
 }

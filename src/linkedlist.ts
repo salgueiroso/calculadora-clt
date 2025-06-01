@@ -2,6 +2,7 @@
 export class Node<T> {
     public next: Node<T> | null = null;
     public prev: Node<T> | null = null;
+
     constructor(public data: T) { }
 }
 
@@ -14,10 +15,12 @@ export interface ILinkedList<T> extends Iterable<Node<T>> {
     clear(): void;
     search(comparator: (data: T) => boolean): Node<T> | null;
     addFromArray(items: Iterable<T>): void;
+    validate(): void;
 }
 
-export class LinkedList<T> implements ILinkedList<T> {
+export abstract class BaseLinkedList<T> implements ILinkedList<T> {
     private head: Node<T> | null = null;
+    private tail: Node<T> | null = null;
 
     constructor(items: Iterable<T> | null = null) {
         if (items)
@@ -26,6 +29,7 @@ export class LinkedList<T> implements ILinkedList<T> {
 
     public clear(): void {
         this.head = null;
+        this.tail = null;
     }
 
 
@@ -44,19 +48,27 @@ export class LinkedList<T> implements ILinkedList<T> {
         };
     }
 
+
+
     public insertAtEnd(data: T): Node<T> {
         const node = new Node(data);
         if (!this.head) {
             this.head = node;
+            this.tail = node;
         } else {
             const getLast = (node: Node<T>): Node<T> => {
                 return node.next ? getLast(node.next) : node;
             };
 
-            const lastNode = getLast(this.head);
+            // const lastNode = getLast(this.head);
+            // node.prev = lastNode;
+            // lastNode.next = node;
+            const lastNode = this.tail;
+            lastNode!.next = node;
             node.prev = lastNode;
-            lastNode.next = node;
+            this.tail = node;
         }
+        this.validate();
         return node;
     }
 
@@ -64,11 +76,13 @@ export class LinkedList<T> implements ILinkedList<T> {
         const node = new Node(data);
         if (!this.head) {
             this.head = node;
+            this.tail = node;
         } else {
             this.head.prev = node;
             node.next = this.head;
             this.head = node;
         }
+        this.validate();
         return node;
     }
 
@@ -114,4 +128,10 @@ export class LinkedList<T> implements ILinkedList<T> {
             this.insertAtEnd(item)
     }
 
+    abstract validate(): void;
+
+}
+
+export class LinkedList<T> extends BaseLinkedList<T> {
+    validate(): void { }
 }

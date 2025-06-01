@@ -5,12 +5,13 @@ const config: Config = {
     testEnvironment: "node",
     reporters: [
         "default",
+        "github-actions",
         ["jest-junit", { outputDirectory: "./reports", outputName: "junit.xml" }]
     ],
     collectCoverage: true,
     coverageDirectory: "./coverage",
 
-    coverageReporters: ["lcov"],
+    coverageReporters: ["clover", "json", "lcov", "text"],
     maxConcurrency: 5
 
 }

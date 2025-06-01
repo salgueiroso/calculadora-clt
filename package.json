@@ -13,8 +13,8 @@
         "npm": ">=10"
     },
     "scripts": {
-        "test": "jest --coverage",
-        "test:watch": "jest --watchAll --coverage",
+        "test": "jest --ci --coverage",
+        "test:watch": "jest --ci --watchAll --coverage",
         "build": "tsup",
         "watch": "tsup --watch",
         "postinstall": "rm -Rf /tmp/node_modules && mv ./node_modules /tmp && ln -s /tmp/node_modules ./node_modules",

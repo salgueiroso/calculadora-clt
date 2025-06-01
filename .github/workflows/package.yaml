@@ -55,7 +55,7 @@ jobs:
     permissions:
       contents: read
       checks: write
-    name: Testes (node v${{ matrix.node-version }})
+    name: Testes (os ${{matrix.os}})(node v${{ matrix.node-version }})
     strategy:
       matrix:
         os: [

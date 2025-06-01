@@ -23,7 +23,6 @@ jobs:
       - run: echo "Preparing definitions..."
 
   check-npm-version:
-    needs: Definitions
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,7 +30,7 @@ jobs:
       - uses: actions/setup-node@v4
         name: Setup Node.js
         with:
-          node-version: ${{ needs.Definitions.outputs.DEFAULT_NODE_VERSION }}
+          node-version: ${{ env.DEFAULT_NODE_VERSION }}
           cache: "npm"
 
       - name: Instalar dependências do Node (sem instalar pacotes)
@@ -51,7 +50,7 @@ jobs:
             echo "✅ Versão $VERSION ainda não publicada."
           fi
   Test:
-    needs: Definitions
+    needs:  [Definitions, check-npm-version]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -104,7 +103,7 @@ jobs:
           files: reports/junit.xml
 
   Build:
-    needs: [Test, Definitions, check-npm-version]
+    needs: [Test]
     runs-on: ubuntu-latest
     permissions:
       contents: read

@@ -84,14 +84,14 @@ jobs:
       - name: Run tests
         run: npm test
       - name: Test Report
-        uses: dorny/test-reporter@31a54ee7ebcacc03a09ea97a7e5465a47b84aea5
+        uses: dorny/test-reporter@v2
         if: success() || failure()
         with:
           name: Testes (os ${{matrix.os}})(node v${{ matrix.node-version }}) - Resultados
           path: reports/junit.xml
           reporter: jest-junit
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@1e68e06f1dbfde0e4cefc87efeba9e4643565303
+        uses: codecov/codecov-action@v5
         if: success() || failure()
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -101,7 +101,7 @@ jobs:
           name: code-coverage-report-node-${{matrix.node-version}}
       - name: Upload test results to Codecov
         if: success() || failure()
-        uses: codecov/test-results-action@4e79e65778be1cecd5df25e14af1eafb6df80ea9
+        uses: codecov/test-results-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
@@ -120,7 +120,7 @@ jobs:
       - uses: actions/setup-node@v4
         name: Setup Node.js
         with:
-          node-version: ${{ needs.Definitions.outputs.DEFAULT_NODE_VERSION }}
+          node-version: ${{ env.DEFAULT_NODE_VERSION }}
           cache: "npm"
       - name: Run npm ci
         run: npm ci
@@ -151,7 +151,7 @@ jobs:
       - uses: actions/setup-node@v4
         name: Setup Node.js
         with:
-          node-version: ${{ needs.Definitions.outputs.DEFAULT_NODE_VERSION }}
+          node-version: ${{ env.DEFAULT_NODE_VERSION }}
           registry-url: "https://registry.npmjs.org"
       - run: find .
         name: List package files

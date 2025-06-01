@@ -64,11 +64,11 @@ jobs:
             "windows-latest"
         ]
         node-version: [
-            "16.x",
+            # "16.x",
             # "20.x",
             # "21.x",
             "${{ needs.Definitions.outputs.DEFAULT_NODE_VERSION }}",
-            "23.x"
+            # "23.x"
           ]
     steps:
       - run: echo token ${{github.token}}

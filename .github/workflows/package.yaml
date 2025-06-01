@@ -26,9 +26,9 @@ jobs:
     needs: Definitions
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4.1.0
+      - uses: actions/setup-node@v4
         name: Setup Node.js
         with:
           node-version: ${{ needs.Definitions.outputs.DEFAULT_NODE_VERSION }}
@@ -60,16 +60,17 @@ jobs:
     strategy:
       matrix:
         node-version: [
+            "16.x",
             # "20.x",
             # "21.x",
             "${{ needs.Definitions.outputs.DEFAULT_NODE_VERSION }}",
-            # "23.x",
+            "23.x"
           ]
     steps:
       - run: echo token ${{github.token}}
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v4
         name: Checkout
-      - uses: actions/setup-node@v4.1.0
+      - uses: actions/setup-node@v4
         name: Setup Node.js ${{ matrix.node-version }}
         with:
           node-version: ${{ matrix.node-version }}
@@ -110,9 +111,9 @@ jobs:
       actions: read
       checks: write
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v4
         name: Checkout
-      - uses: actions/setup-node@v4.1.0
+      - uses: actions/setup-node@v4
         name: Setup Node.js
         with:
           node-version: ${{ needs.Definitions.outputs.DEFAULT_NODE_VERSION }}
@@ -126,7 +127,7 @@ jobs:
       - name: Extract package
         run: tar -xvf *.tgz
       - name: Archive build
-        uses: actions/upload-artifact@v4.5.0
+        uses: actions/upload-artifact@v4
         with:
           name: package
           path: "./package"
@@ -140,10 +141,10 @@ jobs:
       packages: write
       id-token: write
     steps:
-      - uses: actions/download-artifact@v4.1.8
+      - uses: actions/download-artifact@v4
         with:
           name: package
-      - uses: actions/setup-node@v4.1.0
+      - uses: actions/setup-node@v4
         name: Setup Node.js
         with:
           node-version: ${{ needs.Definitions.outputs.DEFAULT_NODE_VERSION }}
